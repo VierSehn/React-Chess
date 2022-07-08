@@ -17,13 +17,13 @@ export default class Pawn extends Piece {
   }
   
   canPawnMove = (pieces, num) => {
-    if (pieces.find(piece => piece.position.y !== y + num && piece.position.x !== x)){
+    if (pieces.find(piece => piece.position.y !== y + num && piece.position.x !== x)) {
       return true;
     }
   }
 
-  canPawnBeat = (pieces, numX, numY) => {
-    if (pieces.find(piece => piece.position.y !== y + numY && piece.position.x !== x + numX)){
+  canPawnBeat = (pieces, team, numX, numY) => {
+    if (pieces.find(piece => piece.position.y !== y + numY && piece.position.x !== x + numX && piece.team !== team)) {
       return true;
     }
   }
@@ -34,16 +34,32 @@ export default class Pawn extends Piece {
     if (this.team === "black") {
       if (canPawnMove(pieces, 1)) {
         result.push({x: x, y: y + 1})
-        if (canPawnMove(pieces, 2) && y === 6) {
+        if (canPawnMove(pieces, 2) && y === 1) {
           result.push({x: x, y: y + 2})
         }
       }
-      if(this.canPawnBeat(pieces, 1, 1)) {
+      if(this.canPawnBeat(pieces, "black", 1, 1)) {
         result.push({x: x + 1, y: y + 1})
       }
-      if(this.canPawnBeat(pieces, -1, 1)) {
+      if(this.canPawnBeat(pieces, "black", -1, 1)) {
         result.push({x: x - 1, y: y + 1})
       }
+      return result;
+    }
+    if (this.team === "white") {
+      if (canPawnMove(pieces, 1)) {
+        result.push({x: x, y: y - 1})
+        if (canPawnMove(pieces, 2) && y === 6) {
+          result.push({x: x, y: y - 2})
+        }
+      }
+      if(this.canPawnBeat(pieces, "white", 1, 1)) {
+        result.push({x: x + 1, y: y - 1})
+      }
+      if(this.canPawnBeat(pieces, "white", -1, 1)) {
+        result.push({x: x - 1, y: y - 1})
+      }
+      return result;
     }
   }
 }
