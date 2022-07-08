@@ -16,47 +16,43 @@ export default class Pawn extends Piece {
     }
   }
   
-  canPawnMove = (pieces, num) => {
-    if (pieces.find(piece => piece.position.y !== y + num && piece.position.x !== x)) {
-      return true;
-    }
+  _isForwardMovePossible = (pieces, num) => {
+    return (pieces.find(piece => piece.position.y !== y + num && piece.position.x !== x))
   }
 
-  canPawnBeat = (pieces, team, numX, numY) => {
-    if (pieces.find(piece => piece.position.y !== y + numY && piece.position.x !== x + numX && piece.team !== team)) {
-      return true;
-    }
+  _isAttackPossible = (pieces, team, numX, numY) => {
+    return (pieces.find(piece => piece.position.y !== y + numY && piece.position.x !== x + numX && piece.team !== team))
   }
 
   getPossibleMoves = (pieces) => {
     const { x, y } = this.position;
     const result = [];
     if (this.team === "black") {
-      if (canPawnMove(pieces, 1)) {
+      if (this._isForwardMovePossible(pieces, 1)) {
         result.push({x: x, y: y + 1})
-        if (canPawnMove(pieces, 2) && y === 1) {
+        if (this._isForwardMovePossible(pieces, 2) && y === 1) {
           result.push({x: x, y: y + 2})
         }
       }
-      if(this.canPawnBeat(pieces, "black", 1, 1)) {
+      if(this._isAttackPossible(pieces, "black", 1, 1)) {
         result.push({x: x + 1, y: y + 1})
       }
-      if(this.canPawnBeat(pieces, "black", -1, 1)) {
+      if(this._isAttackPossible(pieces, "black", -1, 1)) {
         result.push({x: x - 1, y: y + 1})
       }
       return result;
     }
     if (this.team === "white") {
-      if (canPawnMove(pieces, 1)) {
+      if (this._isForwardMovePossible(pieces, 1)) {
         result.push({x: x, y: y - 1})
-        if (canPawnMove(pieces, 2) && y === 6) {
+        if (this._isForwardMovePossible(pieces, 2) && y === 6) {
           result.push({x: x, y: y - 2})
         }
       }
-      if(this.canPawnBeat(pieces, "white", 1, -1)) {
+      if(this._isAttackPossible(pieces, "white", 1, -1)) {
         result.push({x: x + 1, y: y - 1})
       }
-      if(this.canPawnBeat(pieces, "white", -1, -1)) {
+      if(this._isAttackPossible(pieces, "white", -1, -1)) {
         result.push({x: x - 1, y: y - 1})
       }
       return result;
