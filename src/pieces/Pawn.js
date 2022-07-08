@@ -53,10 +53,10 @@ export default class Pawn extends Piece {
           result.push({x: x, y: y - 2})
         }
       }
-      if(this.canPawnBeat(pieces, "white", 1, 1)) {
+      if(this.canPawnBeat(pieces, "white", 1, -1)) {
         result.push({x: x + 1, y: y - 1})
       }
-      if(this.canPawnBeat(pieces, "white", -1, 1)) {
+      if(this.canPawnBeat(pieces, "white", -1, -1)) {
         result.push({x: x - 1, y: y - 1})
       }
       return result;
