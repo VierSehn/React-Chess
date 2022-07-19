@@ -1,7 +1,7 @@
 export default class Piece {
   image = ""
   team = ""
-  pozition =  {
+  position =  {
     x: null,
     y: null,
   }
