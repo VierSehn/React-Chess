@@ -17,49 +17,37 @@ export default class Bishop extends Piece {
     }
   }
 
-  _isAttackPossible = (pieces, step) => {
-    const piece = pieces.find(({ position: { x, y } }) => (
-      this.position.x + step === x && this.position.y + step === y
-    ))
-    return piece && piece.team === this.team
-  }
-  _isMovePossible = (pieces, step) => {
-      if (pieces.find(({ position: { x, y } }) => (
-        this.position.x + step === x && this.position.y + step === y
-      )) === undefined) return true
+  getDiagonalMoves = (moves, pieces, directionX, directionY) => {
+    const { x, y } = this.position;
+
+    for (let step = 1; step < 9; step++) {
+      const move = {
+        x: x + directionX * step,
+        y: y + directionY * step,
+      };
+      const foundPiece = pieces.find(piece => (
+        piece.position.x === move.x && piece.position.y === move.y
+      ));
+
+      if (foundPiece) {
+        if (foundPiece.team !== this.team) {
+          moves.push(move);
+        }
+        break;
+      } else {
+        moves.push(move);
+      }
+    }
   }
 
   getPossibleMoves = (pieces) => {
-    const result = [];
-    const {x, y} = this.position
-    const maxMoves = Math.max(8 - x, 8 - y, x, y)
-    for (let i = 1; i <= maxMoves; i++) {
-      if (x + i < 8) {
-        if (y + i < 8) {
-          if (this._isAttackPossible(pieces, i) || this._isMovePossible(pieces, i)) {
-            result.push({x: x + i, y: y + i})
-          }
-          else break;
-        }
-        if (y - i >= 0) {
-          if (this._isAttackPossible(pieces, i) || this._isMovePossible(pieces, i)) {
-          result.push({x: x + i, y: y - i})
-          }
-        }
-      }
-      if (x - i >= 0) {
-        if (y + i < 8) {
-          if (this._isAttackPossible(pieces, i) || this._isMovePossible(pieces, i)) {
-          result.push({x: x - i, y: y + i})
-          }
-        }
-        if (y - i >= 0) {
-          if (this._isAttackPossible(pieces, i) || this._isMovePossible(pieces, i)) {
-          result.push({x: x - i, y: y - i})
-          }
-        }
-      }
-    }
-    return result;
+    const moves = [];
+
+    this.getDiagonalMoves(moves, pieces, 1, 1);
+    this.getDiagonalMoves(moves, pieces, -1, 1);
+    this.getDiagonalMoves(moves, pieces, 1, -1);
+    this.getDiagonalMoves(moves, pieces, -1, -1);
+
+    return moves.filter(move => move.x >= 0 && move.x < 8 && move.y >= 0 && move.y < 8);
   }
 }
