@@ -1,8 +1,11 @@
 import React from "react";
 
 import Square from "./Square";
+import SquareIdentifier from "./SquareIdentifier";
 import "./Board.css";
 import createInitialPieces from "../../createInitialPieces";
+
+const A_BYTE_REPRESENTATION = "A".charCodeAt(0);
 
 const getOppositeTeam = (currentTeam) => {
   if (currentTeam === "white") {
@@ -105,12 +108,29 @@ class Board extends React.Component {
           />
         );
       }
+      result.push(
+        <SquareIdentifier>
+          {8 - j}
+        </SquareIdentifier>
+      )
     }
-    return result;
+
+    return [
+      ...result,
+      ...Array(8).fill(null).map((_, i) => (
+        <SquareIdentifier>
+          {String.fromCharCode(A_BYTE_REPRESENTATION + i)}
+        </SquareIdentifier>
+      )),
+    ];
   };
 
   render() {
-    return <div className="board">{this.renderBoard()}</div>;
+    return (
+      <div className="board">
+        {this.renderBoard()}
+      </div>
+    );
   }
 }
 
