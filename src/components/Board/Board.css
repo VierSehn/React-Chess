@@ -1,6 +1,5 @@
 .board {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-gap: 1px;
+  grid-template-columns: repeat(9, 1fr);
   width: calc(80px * 8);
 }
