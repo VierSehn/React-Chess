@@ -1,8 +1,8 @@
 import Piece from "./Piece";
-import BlackRook from "../assets/pieces/bR.png"
-import WhiteRook from "../assets/pieces/wR.png"
+import BlackQueen from "../assets/pieces/bQ.png"
+import WhiteQueen from "../assets/pieces/wQ.png"
 
-export default class Rook extends Piece {
+export default class Queen extends Piece {
   constructor(x, y, team) {
     super(x, y, team)
     this.position.x = x;
@@ -10,14 +10,14 @@ export default class Rook extends Piece {
     this.team = team;
 
     if (team === "white") {
-      this.image = WhiteRook;
+      this.image = WhiteQueen;
     }
     if (team === "black") {
-      this.image = BlackRook;
+      this.image = BlackQueen;
     }
   }
   
-  getStraightMoves = (moves, pieces, directionX, directionY) => {
+  getQueenMoves = (moves, pieces, directionX, directionY) => {
     const { x, y } = this.position;
 
     for (let step = 1; step < 9; step++) {
@@ -43,11 +43,15 @@ export default class Rook extends Piece {
   getPossibleMoves = (pieces) => {
     const moves = [];
 
-    this.getStraightMoves(moves, pieces, 1, 0);
-    this.getStraightMoves(moves, pieces, -1, 0);
-    this.getStraightMoves(moves, pieces, 0, 1);
-    this.getStraightMoves(moves, pieces, 0, -1);
-
+    this.getQueenMoves(moves, pieces, 1, 1);
+    this.getQueenMoves(moves, pieces, 1, 0);
+    this.getQueenMoves(moves, pieces, 1, -1);
+    this.getQueenMoves(moves, pieces, 0, 1);
+    this.getQueenMoves(moves, pieces, 0, -1);
+    this.getQueenMoves(moves, pieces, -1, 1);
+    this.getQueenMoves(moves, pieces, -1, 0);
+    this.getQueenMoves(moves, pieces, -1, -1);
+    
     return moves.filter(move => move.x >= 0 && move.x < 8 && move.y >= 0 && move.y < 8);
   }
 }

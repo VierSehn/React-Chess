@@ -47,9 +47,9 @@ export default class Pawn extends Piece {
       return result;
     }
     if (this.team === "white") {
-      if (this._isForwardMovePossible(pieces, 1)) {
+      if (this._isForwardMovePossible(pieces, -1)) {
         result.push({x: x, y: y - 1})
-        if (this._isForwardMovePossible(pieces, 2) && y === 6) {
+        if (this._isForwardMovePossible(pieces, -2) && y === 6) {
           result.push({x: x, y: y - 2})
         }
       }
