@@ -1,6 +1,6 @@
 import Piece from "./Piece";
-import BlackQueen from "../assets/pieces/bQ.png"
-import WhiteQueen from "../assets/pieces/wQ.png"
+import BlackQueen from "../assets/pieces/blackQueen.png"
+import WhiteQueen from "../assets/pieces/whiteQueen.png"
 
 export default class Queen extends Piece {
   constructor(x, y, team) {

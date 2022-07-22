@@ -1,6 +1,6 @@
 import Piece from "./Piece";
-import BlackRook from "../assets/pieces/bR.png"
-import WhiteRook from "../assets/pieces/wR.png"
+import BlackRook from "../assets/pieces/blackRook.png"
+import WhiteRook from "../assets/pieces/whiteRook.png"
 
 export default class Rook extends Piece {
   constructor(x, y, team) {

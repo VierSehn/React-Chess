@@ -1,6 +1,6 @@
 import Piece from "./Piece";
-import BlackBishop from "../assets/pieces/bB.png"
-import WhiteBishop from "../assets/pieces/wB.png"
+import BlackBishop from "../assets/pieces/blackBishop.png"
+import WhiteBishop from "../assets/pieces/whiteBishop.png"
 
 export default class Bishop extends Piece {
   constructor(x, y, team) {

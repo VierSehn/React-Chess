@@ -1,6 +1,6 @@
 import Piece from "./Piece";
-import BlackPawn from "../assets/pieces/bP.png"
-import WhitePawn from "../assets/pieces/wP.png"
+import BlackPawn from "../assets/pieces/blackPawn.png"
+import WhitePawn from "../assets/pieces/whitePawn.png"
 
 export default class Pawn extends Piece {
   constructor(x, y, team) {
