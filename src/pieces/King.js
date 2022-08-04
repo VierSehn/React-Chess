@@ -2,7 +2,7 @@ import Piece from "./Piece";
 import BlackKing from "../assets/pieces/blackKing.png"
 import WhiteKing from "../assets/pieces/whiteKing.png"
 
-export default class Pawn extends Piece {
+export default class King extends Piece {
   constructor(x, y, team) {
     super(x, y, team)
     this.position.x = x;
