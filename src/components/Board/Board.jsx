@@ -4,6 +4,7 @@ import Square from "./Square";
 import SquareIdentifier from "./SquareIdentifier";
 import "./Board.css";
 import createInitialPieces from "../../createInitialPieces";
+import King from "../../pieces/King";
 
 const A_BYTE_REPRESENTATION = "A".charCodeAt(0);
 
@@ -82,6 +83,25 @@ class Board extends React.Component {
     }
   };
 
+  isKingUnderAttack = () => {
+    const { pieces, currentTeam } = this.state;
+    const king = pieces.find(
+      (piece) => piece instanceof King && piece.team === currentTeam
+    );
+    const enemies = pieces.filter((piece) => piece.team !== currentTeam);
+    for (const enemy of enemies) {
+      const isUnderAttack = !!enemy
+        .getPossibleMoves(pieces)
+        .find(
+          (move) => move.x === king.position.x && move.y === king.position.y
+        );
+      if (isUnderAttack) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   renderBoard = () => {
     const { pieces, selectedPiece } = this.state;
     const result = [];
@@ -108,29 +128,26 @@ class Board extends React.Component {
           />
         );
       }
-      result.push(
-        <SquareIdentifier>
-          {8 - j}
-        </SquareIdentifier>
-      )
+      result.push(<SquareIdentifier>{8 - j}</SquareIdentifier>);
     }
 
     return [
       ...result,
-      ...Array(8).fill(null).map((_, i) => (
-        <SquareIdentifier>
-          {String.fromCharCode(A_BYTE_REPRESENTATION + i)}
-        </SquareIdentifier>
-      )),
+      ...Array(8)
+        .fill(null)
+        .map((_, i) => (
+          <SquareIdentifier>
+            {String.fromCharCode(A_BYTE_REPRESENTATION + i)}
+          </SquareIdentifier>
+        )),
     ];
   };
 
   render() {
-    return (
-      <div className="board">
-        {this.renderBoard()}
-      </div>
-    );
+    if (this.isKingUnderAttack()) {
+      console.log("King is attacked");
+    }
+    return <div className="board">{this.renderBoard()}</div>;
   }
 }
 
